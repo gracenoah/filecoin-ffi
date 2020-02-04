@@ -1,28 +1,37 @@
+//+build cgo
+
 package ffi
 
+// #cgo LDFLAGS: ${SRCDIR}/libfilcrypto.a
+// #cgo pkg-config: ${SRCDIR}/filcrypto.pc
+// #include "./filcrypto.h"
+import "C"
 import (
 	"os"
 	"unsafe"
 
-	"github.com/filecoin-project/specs-actors/actors/abi"
+	"github.com/filecoin-project/go-state-types/abi"
+	"github.com/filecoin-project/specs-actors/actors/runtime/proof"
 	"github.com/ipfs/go-cid"
+
+	"github.com/filecoin-project/filecoin-ffi/generated"
 )
 
 // VerifySeal returns true if the sealing operation from which its inputs were
 // derived was valid, and false if not.
-func VerifySeal(info abi.SealVerifyInfo) (bool, error) {
+func VerifySeal(info proof.SealVerifyInfo) (bool, error) {
 	panic("")
 }
 
 // VerifyWinningPoSt returns true if the Winning PoSt-generation operation from which its
 // inputs were derived was valid, and false if not.
-func VerifyWinningPoSt(info abi.WinningPoStVerifyInfo) (bool, error) {
+func VerifyWinningPoSt(info proof.WinningPoStVerifyInfo) (bool, error) {
 	panic("")
 }
 
 // VerifyWindowPoSt returns true if the Winning PoSt-generation operation from which its
 // inputs were derived was valid, and false if not.
-func VerifyWindowPoSt(info abi.WindowPoStVerifyInfo) (bool, error) {
+func VerifyWindowPoSt(info proof.WindowPoStVerifyInfo) (bool, error) {
 	panic("")
 }
 
@@ -158,7 +167,7 @@ func GenerateWinningPoSt(
 	minerID abi.ActorID,
 	privateSectorInfo SortedPrivateSectorInfo,
 	randomness abi.PoStRandomness,
-) ([]abi.PoStProof, error) {
+) ([]proof.PoStProof, error) {
 	panic("")
 }
 
@@ -167,7 +176,7 @@ func GenerateWindowPoSt(
 	minerID abi.ActorID,
 	privateSectorInfo SortedPrivateSectorInfo,
 	randomness abi.PoStRandomness,
-) ([]abi.PoStProof, error) {
+) ([]proof.PoStProof, []abi.SectorNumber, error) {
 	panic("")
 }
 
@@ -192,15 +201,87 @@ func ClearCache(sectorSize uint64, cacheDirPath string) error {
 	panic("")
 }
 
+func FauxRep(proofType abi.RegisteredSealProof, cacheDirPath string, sealedSectorPath string) (cid.Cid, error) {
+	panic("")
+}
+
+func FauxRep2(proofType abi.RegisteredSealProof, cacheDirPath string, existingPAuxPath string) (cid.Cid, error) {
+	panic("")
+}
+
 func toFilExistingPieceSizes(src []abi.UnpaddedPieceSize) ([]uint64, uint) {
 	panic("")
 }
 
-func toGoStringCopy(raw string, rawLen uint) string {
+func toFilPublicPieceInfos(src []abi.PieceInfo) ([]generated.FilPublicPieceInfo, uint, error) {
+	panic("")
+}
+
+func toFilPublicReplicaInfos(src []proof.SectorInfo, typ string) ([]generated.FilPublicReplicaInfo, uint, error) {
+	panic("")
+}
+
+func toFilPrivateReplicaInfo(src PrivateSectorInfo) (generated.FilPrivateReplicaInfo, func(), error) {
+	panic("")
+}
+
+func toFilPrivateReplicaInfos(src []PrivateSectorInfo, typ string) ([]generated.FilPrivateReplicaInfo, uint, func(), error) {
+	panic("")
+}
+
+func fromFilPoStFaultySectors(ptr []uint64, l uint) ([]abi.SectorNumber, error) {
+	panic("")
+}
+
+func fromFilPoStProofs(src []generated.FilPoStProof) ([]proof.PoStProof, error) {
+	panic("")
+}
+
+func toFilPoStProofs(src []proof.PoStProof) ([]generated.FilPoStProof, uint, func(), error) {
+	panic("")
+}
+
+func to32ByteArray(in []byte) generated.Fil32ByteArray {
+	panic("")
+}
+
+func toProverID(minerID abi.ActorID) (generated.Fil32ByteArray, error) {
+	panic("")
+}
+
+func fromFilRegisteredPoStProof(p generated.FilRegisteredPoStProof) (abi.RegisteredPoStProof, error) {
+	panic("")
+}
+
+func toFilRegisteredPoStProof(p abi.RegisteredPoStProof) (generated.FilRegisteredPoStProof, error) {
+	panic("")
+}
+
+func toFilRegisteredSealProof(p abi.RegisteredSealProof) (generated.FilRegisteredSealProof, error) {
+	panic("")
+}
+
+func to32ByteCommD(unsealedCID cid.Cid) (generated.Fil32ByteArray, error) {
+	panic("")
+}
+
+func to32ByteCommR(sealedCID cid.Cid) (generated.Fil32ByteArray, error) {
+	panic("")
+}
+
+func to32ByteCommP(pieceCID cid.Cid) (generated.Fil32ByteArray, error) {
+	panic("")
+}
+
+func copyBytes(v []byte, vLen uint) []byte {
 	panic("")
 }
 
 type stringHeader struct {
 	Data unsafe.Pointer
 	Len  int
+}
+
+func toVanillaProofs(src [][]byte) ([]generated.FilVanillaProof, func()) {
+	panic("")
 }
