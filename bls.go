@@ -1,5 +1,10 @@
 package ffi
 
+// #cgo LDFLAGS: ${SRCDIR}/libfilcrypto.a
+// #cgo pkg-config: ${SRCDIR}/filcrypto.pc
+// #include "./filcrypto.h"
+import "C"
+
 // Hash computes the digest of a message
 func Hash(message Message) Digest {
 	panic("")
@@ -15,7 +20,9 @@ func HashVerify(signature *Signature, messages []Message, publicKeys []PublicKey
 	panic("")
 }
 
-// Aggregate aggregates signatures together into a new signature
+// Aggregate aggregates signatures together into a new signature. If the
+// provided signatures cannot be aggregated (due to invalid input or an
+// an operational error), Aggregate will return nil.
 func Aggregate(signatures []Signature) *Signature {
 	panic("")
 }
