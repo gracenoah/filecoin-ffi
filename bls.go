@@ -37,21 +37,6 @@ func PrivateKeyGenerateWithSeed(seed PrivateKeyGenSeed) PrivateKey {
 	panic("")
 }
 
-// PrivateKeyGenerate generates a private key in a predictable manner
-func PrivateKeyGenerateWithSeed(seed PrivateKeyGenSeed) PrivateKey {
-	var ary generated.Fil32ByteArray
-	copy(ary.Inner[:], seed[:])
-
-	resp := generated.FilPrivateKeyGenerateWithSeed(ary)
-	resp.Deref()
-	resp.PrivateKey.Deref()
-	defer generated.FilDestroyPrivateKeyGenerateResponse(resp)
-
-	var out PrivateKey
-	copy(out[:], resp.PrivateKey.Inner[:])
-	return out
-}
-
 // PrivateKeySign signs a message
 func PrivateKeySign(privateKey PrivateKey, message Message) *Signature {
 	panic("")
