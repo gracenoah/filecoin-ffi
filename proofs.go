@@ -196,6 +196,10 @@ func ClearCache(sectorSize uint64, cacheDirPath string) error {
 	panic("")
 }
 
+func FauxRep(proofType abi.RegisteredSealProof, cacheDirPath string, sealedSectorPath string) (cid.Cid, error) {
+	panic("")
+}
+
 func toFilExistingPieceSizes(src []abi.UnpaddedPieceSize) ([]uint64, uint) {
 	panic("")
 }
