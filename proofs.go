@@ -6,8 +6,6 @@ import (
 
 	"github.com/filecoin-project/specs-actors/actors/abi"
 	"github.com/ipfs/go-cid"
-
-	"github.com/filecoin-project/filecoin-ffi/generated"
 )
 
 // VerifySeal returns true if the sealing operation from which its inputs were
@@ -195,58 +193,6 @@ func ClearCache(sectorSize uint64, cacheDirPath string) error {
 }
 
 func toFilExistingPieceSizes(src []abi.UnpaddedPieceSize) ([]uint64, uint) {
-	panic("")
-}
-
-func toFilPublicPieceInfos(src []abi.PieceInfo) ([]generated.FilPublicPieceInfo, uint, error) {
-	panic("")
-}
-
-func toFilPublicReplicaInfos(src []abi.SectorInfo, typ string) ([]generated.FilPublicReplicaInfo, uint, error) {
-	panic("")
-}
-
-func toFilPrivateReplicaInfos(src []PrivateSectorInfo, typ string) ([]generated.FilPrivateReplicaInfo, uint, func(), error) {
-	panic("")
-}
-
-func fromFilPoStProofs(src []generated.FilPoStProof) ([]abi.PoStProof, error) {
-	panic("")
-}
-
-func toFilPoStProofs(src []abi.PoStProof) ([]generated.FilPoStProof, uint, func(), error) {
-	panic("")
-}
-
-func to32ByteArray(in []byte) generated.Fil32ByteArray {
-	panic("")
-}
-
-func toProverID(minerID abi.ActorID) (generated.Fil32ByteArray, error) {
-	panic("")
-}
-
-func fromFilRegisteredPoStProof(p generated.FilRegisteredPoStProof) (abi.RegisteredPoStProof, error) {
-	panic("")
-}
-
-func toFilRegisteredPoStProof(p abi.RegisteredPoStProof) (generated.FilRegisteredPoStProof, error) {
-	panic("")
-}
-
-func toFilRegisteredSealProof(p abi.RegisteredSealProof) (generated.FilRegisteredSealProof, error) {
-	panic("")
-}
-
-func to32ByteCommD(unsealedCID cid.Cid) (generated.Fil32ByteArray, error) {
-	panic("")
-}
-
-func to32ByteCommR(sealedCID cid.Cid) (generated.Fil32ByteArray, error) {
-	panic("")
-}
-
-func to32ByteCommP(pieceCID cid.Cid) (generated.Fil32ByteArray, error) {
 	panic("")
 }
 
