@@ -1,5 +1,3 @@
-//+build cgo
-
 package ffi
 
 // Hash computes the digest of a message
