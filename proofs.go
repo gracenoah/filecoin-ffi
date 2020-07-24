@@ -2,174 +2,259 @@ package ffi
 
 import (
 	"os"
-)
+	"unsafe"
 
-// NewSortedPublicSectorInfo returns a SortedPublicSectorInfo
+	"github.com/filecoin-project/specs-actors/actors/abi"
+	"github.com/ipfs/go-cid"
+
+	"github.com/filecoin-project/filecoin-ffi/generated"
+)
 
 // VerifySeal returns true if the sealing operation from which its inputs were
 // derived was valid, and false if not.
-func VerifySeal(
-	sectorSize uint64,
-	commR [CommitmentBytesLen]byte,
-	commD [CommitmentBytesLen]byte,
-	proverID [32]byte,
-	ticket [32]byte,
-	seed [32]byte,
-	sectorID uint64,
-	proof []byte,
-) (bool, error) {
-
+func VerifySeal(info abi.SealVerifyInfo) (bool, error) {
 	panic("")
 }
 
-// VerifyPoSt returns true if the PoSt-generation operation from which its
+// VerifyWinningPoSt returns true if the Winning PoSt-generation operation from which its
 // inputs were derived was valid, and false if not.
-func VerifyPoSt(
-	sectorSize uint64,
-	sectorInfo SortedPublicSectorInfo,
-	randomness [32]byte,
-	challengeCount uint64,
-	proof []byte,
-	winners []Candidate,
-	proverID [32]byte,
-) (bool, error) {
+func VerifyWinningPoSt(info abi.WinningPoStVerifyInfo) (bool, error) {
 	panic("")
 }
 
-// GetMaxUserBytesPerStagedSector returns the number of user bytes that will fit
-// into a staged sector. Due to bit-padding, the number of user bytes that will
-// fit into the staged sector will be less than number of bytes in sectorSize.
-func GetMaxUserBytesPerStagedSector(sectorSize uint64) uint64 {
+// VerifyWindowPoSt returns true if the Winning PoSt-generation operation from which its
+// inputs were derived was valid, and false if not.
+func VerifyWindowPoSt(info abi.WindowPoStVerifyInfo) (bool, error) {
 	panic("")
 }
 
 // GeneratePieceCommitment produces a piece commitment for the provided data
 // stored at a given path.
-func GeneratePieceCommitment(piecePath string, pieceSize uint64) ([CommitmentBytesLen]byte, error) {
+func GeneratePieceCID(proofType abi.RegisteredSealProof, piecePath string, pieceSize abi.UnpaddedPieceSize) (cid.Cid, error) {
 	panic("")
 }
 
 // GenerateDataCommitment produces a commitment for the sector containing the
 // provided pieces.
-func GenerateDataCommitment(sectorSize uint64, pieces []PublicPieceInfo) ([CommitmentBytesLen]byte, error) {
+func GenerateUnsealedCID(proofType abi.RegisteredSealProof, pieces []abi.PieceInfo) (cid.Cid, error) {
 	panic("")
 }
 
-// GeneratePieceCommitmentFromFile produces a piece commitment for the provided data
-// stored in a given file.
-func GeneratePieceCommitmentFromFile(pieceFile *os.File, pieceSize uint64) (commP [CommitmentBytesLen]byte, err error) {
+// GeneratePieceCIDFromFile produces a piece CID for the provided data stored in
+//a given file.
+func GeneratePieceCIDFromFile(proofType abi.RegisteredSealProof, pieceFile *os.File, pieceSize abi.UnpaddedPieceSize) (cid.Cid, error) {
 	panic("")
 }
 
 // WriteWithAlignment
 func WriteWithAlignment(
+	proofType abi.RegisteredSealProof,
 	pieceFile *os.File,
-	pieceBytes uint64,
+	pieceBytes abi.UnpaddedPieceSize,
 	stagedSectorFile *os.File,
-	existingPieceSizes []uint64,
-) (leftAlignment, total uint64, commP [CommitmentBytesLen]byte, retErr error) {
+	existingPieceSizes []abi.UnpaddedPieceSize,
+) (leftAlignment, total abi.UnpaddedPieceSize, pieceCID cid.Cid, retErr error) {
 	panic("")
 }
 
 // WriteWithoutAlignment
 func WriteWithoutAlignment(
+	proofType abi.RegisteredSealProof,
 	pieceFile *os.File,
-	pieceBytes uint64,
+	pieceBytes abi.UnpaddedPieceSize,
 	stagedSectorFile *os.File,
-) (uint64, [CommitmentBytesLen]byte, error) {
+) (abi.UnpaddedPieceSize, cid.Cid, error) {
 	panic("")
 }
 
-// SealPreCommit
-func SealPreCommit(
-	sectorSize uint64,
-	poRepProofPartitions uint8,
+// SealPreCommitPhase1
+func SealPreCommitPhase1(
+	proofType abi.RegisteredSealProof,
 	cacheDirPath string,
 	stagedSectorPath string,
 	sealedSectorPath string,
-	sectorID uint64,
-	proverID [32]byte,
-	ticket [32]byte,
-	pieces []PublicPieceInfo,
-) (RawSealPreCommitOutput, error) {
+	sectorNum abi.SectorNumber,
+	minerID abi.ActorID,
+	ticket abi.SealRandomness,
+	pieces []abi.PieceInfo,
+) (phase1Output []byte, err error) {
 	panic("")
 }
 
-// SealCommit
-func SealCommit(
-	sectorSize uint64,
-	poRepProofPartitions uint8,
+// SealPreCommitPhase2
+func SealPreCommitPhase2(
+	phase1Output []byte,
 	cacheDirPath string,
-	sectorID uint64,
-	proverID [32]byte,
-	ticket [32]byte,
-	seed [32]byte,
-	pieces []PublicPieceInfo,
-	rspco RawSealPreCommitOutput,
+	sealedSectorPath string,
+) (sealedCID cid.Cid, unsealedCID cid.Cid, err error) {
+	panic("")
+}
+
+// SealCommitPhase1
+func SealCommitPhase1(
+	proofType abi.RegisteredSealProof,
+	sealedCID cid.Cid,
+	unsealedCID cid.Cid,
+	cacheDirPath string,
+	sealedSectorPath string,
+	sectorNum abi.SectorNumber,
+	minerID abi.ActorID,
+	ticket abi.SealRandomness,
+	seed abi.InteractiveSealRandomness,
+	pieces []abi.PieceInfo,
+) (phase1Output []byte, err error) {
+	panic("")
+}
+
+// SealCommitPhase2
+func SealCommitPhase2(
+	phase1Output []byte,
+	sectorNum abi.SectorNumber,
+	minerID abi.ActorID,
 ) ([]byte, error) {
 	panic("")
 }
 
 // Unseal
 func Unseal(
-	sectorSize uint64,
-	poRepProofPartitions uint8,
+	proofType abi.RegisteredSealProof,
 	cacheDirPath string,
-	sealedSectorPath string,
-	unsealOutputPath string,
-	sectorID uint64,
-	proverID [32]byte,
-	ticket [32]byte,
-	commD [CommitmentBytesLen]byte,
+	sealedSector *os.File,
+	unsealOutput *os.File,
+	sectorNum abi.SectorNumber,
+	minerID abi.ActorID,
+	ticket abi.SealRandomness,
+	unsealedCID cid.Cid,
 ) error {
 	panic("")
 }
 
 // UnsealRange
 func UnsealRange(
-	sectorSize uint64,
-	poRepProofPartitions uint8,
+	proofType abi.RegisteredSealProof,
 	cacheDirPath string,
-	sealedSectorPath string,
-	unsealOutputPath string,
-	sectorID uint64,
-	proverID [32]byte,
-	ticket [32]byte,
-	commD [CommitmentBytesLen]byte,
-	offset uint64,
-	len uint64,
+	sealedSector *os.File,
+	unsealOutput *os.File,
+	sectorNum abi.SectorNumber,
+	minerID abi.ActorID,
+	ticket abi.SealRandomness,
+	unsealedCID cid.Cid,
+	unpaddedByteIndex uint64,
+	unpaddedBytesAmount uint64,
 ) error {
 	panic("")
 }
 
-// FinalizeTicket creates an actual ticket from a partial ticket.
-func FinalizeTicket(partialTicket [32]byte) ([32]byte, error) {
+// GenerateWinningPoStSectorChallenge
+func GenerateWinningPoStSectorChallenge(
+	proofType abi.RegisteredPoStProof,
+	minerID abi.ActorID,
+	randomness abi.PoStRandomness,
+	eligibleSectorsLen uint64,
+) ([]uint64, error) {
 	panic("")
 }
 
-// GenerateCandidates
-func GenerateCandidates(
-	sectorSize uint64,
-	proverID [32]byte,
-	randomness [32]byte,
-	challengeCount uint64,
+// GenerateWinningPoSt
+func GenerateWinningPoSt(
+	minerID abi.ActorID,
 	privateSectorInfo SortedPrivateSectorInfo,
-) ([]Candidate, error) {
-	panic("")
+	randomness abi.PoStRandomness,
+) ([]abi.PoStProof, error) {
+	v
 }
 
-// GeneratePoSt
-func GeneratePoSt(
-	sectorSize uint64,
-	proverID [32]byte,
+// GenerateWindowPoSt
+func GenerateWindowPoSt(
+	minerID abi.ActorID,
 	privateSectorInfo SortedPrivateSectorInfo,
-	randomness [32]byte,
-	winners []Candidate,
-) ([]byte, error) {
+	randomness abi.PoStRandomness,
+) ([]abi.PoStProof, error) {
 	panic("")
 }
 
-// SingleProofPartitionProofLen denotes the number of bytes in a proof generated
-// with a single partition. The number of bytes in a proof increases linearly
-// with the number of partitions used when creating that proof.
-const SingleProofPartitionProofLen = 192
+// GetGPUDevices produces a slice of strings, each representing the name of a
+// detected GPU device.
+func GetGPUDevices() ([]string, error) {
+	panic("")
+}
+
+// GetSealVersion
+func GetSealVersion(proofType abi.RegisteredSealProof) (string, error) {
+	panic("")
+}
+
+// GetPoStVersion
+func GetPoStVersion(proofType abi.RegisteredPoStProof) (string, error) {
+	panic("")
+}
+
+// ClearCache
+func ClearCache(sectorSize uint64, cacheDirPath string) error {
+	panic("")
+}
+
+func toFilExistingPieceSizes(src []abi.UnpaddedPieceSize) ([]uint64, uint) {
+	panic("")
+}
+
+func toFilPublicPieceInfos(src []abi.PieceInfo) ([]generated.FilPublicPieceInfo, uint, error) {
+	panic("")
+}
+
+func toFilPublicReplicaInfos(src []abi.SectorInfo, typ string) ([]generated.FilPublicReplicaInfo, uint, error) {
+	panic("")
+}
+
+func toFilPrivateReplicaInfos(src []PrivateSectorInfo, typ string) ([]generated.FilPrivateReplicaInfo, uint, func(), error) {
+	panic("")
+}
+
+func fromFilPoStProofs(src []generated.FilPoStProof) ([]abi.PoStProof, error) {
+	panic("")
+}
+
+func toFilPoStProofs(src []abi.PoStProof) ([]generated.FilPoStProof, uint, func(), error) {
+	panic("")
+}
+
+func to32ByteArray(in []byte) generated.Fil32ByteArray {
+	panic("")
+}
+
+func toProverID(minerID abi.ActorID) (generated.Fil32ByteArray, error) {
+	panic("")
+}
+
+func fromFilRegisteredPoStProof(p generated.FilRegisteredPoStProof) (abi.RegisteredPoStProof, error) {
+	panic("")
+}
+
+func toFilRegisteredPoStProof(p abi.RegisteredPoStProof) (generated.FilRegisteredPoStProof, error) {
+	panic("")
+}
+
+func toFilRegisteredSealProof(p abi.RegisteredSealProof) (generated.FilRegisteredSealProof, error) {
+	panic("")
+}
+
+func to32ByteCommD(unsealedCID cid.Cid) (generated.Fil32ByteArray, error) {
+	panic("")
+}
+
+func to32ByteCommR(sealedCID cid.Cid) (generated.Fil32ByteArray, error) {
+	panic("")
+}
+
+func to32ByteCommP(pieceCID cid.Cid) (generated.Fil32ByteArray, error) {
+	panic("")
+}
+
+func toGoStringCopy(raw string, rawLen uint) string {
+	panic("")
+}
+
+type stringHeader struct {
+	Data unsafe.Pointer
+	Len  int
+}
