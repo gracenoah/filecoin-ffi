@@ -159,7 +159,7 @@ func GenerateWinningPoSt(
 	privateSectorInfo SortedPrivateSectorInfo,
 	randomness abi.PoStRandomness,
 ) ([]abi.PoStProof, error) {
-	v
+	panic("")
 }
 
 // GenerateWindowPoSt
