@@ -4,6 +4,9 @@ package ffi
 // #cgo pkg-config: ${SRCDIR}/filcrypto.pc
 // #include "./filcrypto.h"
 import "C"
+import (
+	"github.com/filecoin-project/filecoin-ffi/generated"
+)
 
 // Hash computes the digest of a message
 func Hash(message Message) Digest {
