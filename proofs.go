@@ -1,11 +1,5 @@
-//+build cgo
-
 package ffi
 
-// #cgo LDFLAGS: ${SRCDIR}/libfilcrypto.a
-// #cgo pkg-config: ${SRCDIR}/filcrypto.pc
-// #include "./filcrypto.h"
-import "C"
 import (
 	"os"
 	"unsafe"
@@ -13,8 +7,6 @@ import (
 	"github.com/filecoin-project/go-state-types/abi"
 	"github.com/filecoin-project/specs-actors/actors/runtime/proof"
 	"github.com/ipfs/go-cid"
-
-	"github.com/filecoin-project/filecoin-ffi/generated"
 )
 
 // VerifySeal returns true if the sealing operation from which its inputs were
@@ -209,79 +201,7 @@ func FauxRep2(proofType abi.RegisteredSealProof, cacheDirPath string, existingPA
 	panic("")
 }
 
-func toFilExistingPieceSizes(src []abi.UnpaddedPieceSize) ([]uint64, uint) {
-	panic("")
-}
-
-func toFilPublicPieceInfos(src []abi.PieceInfo) ([]generated.FilPublicPieceInfo, uint, error) {
-	panic("")
-}
-
-func toFilPublicReplicaInfos(src []proof.SectorInfo, typ string) ([]generated.FilPublicReplicaInfo, uint, error) {
-	panic("")
-}
-
-func toFilPrivateReplicaInfo(src PrivateSectorInfo) (generated.FilPrivateReplicaInfo, func(), error) {
-	panic("")
-}
-
-func toFilPrivateReplicaInfos(src []PrivateSectorInfo, typ string) ([]generated.FilPrivateReplicaInfo, uint, func(), error) {
-	panic("")
-}
-
-func fromFilPoStFaultySectors(ptr []uint64, l uint) ([]abi.SectorNumber, error) {
-	panic("")
-}
-
-func fromFilPoStProofs(src []generated.FilPoStProof) ([]proof.PoStProof, error) {
-	panic("")
-}
-
-func toFilPoStProofs(src []proof.PoStProof) ([]generated.FilPoStProof, uint, func(), error) {
-	panic("")
-}
-
-func to32ByteArray(in []byte) generated.Fil32ByteArray {
-	panic("")
-}
-
-func toProverID(minerID abi.ActorID) (generated.Fil32ByteArray, error) {
-	panic("")
-}
-
-func fromFilRegisteredPoStProof(p generated.FilRegisteredPoStProof) (abi.RegisteredPoStProof, error) {
-	panic("")
-}
-
-func toFilRegisteredPoStProof(p abi.RegisteredPoStProof) (generated.FilRegisteredPoStProof, error) {
-	panic("")
-}
-
-func toFilRegisteredSealProof(p abi.RegisteredSealProof) (generated.FilRegisteredSealProof, error) {
-	panic("")
-}
-
-func to32ByteCommD(unsealedCID cid.Cid) (generated.Fil32ByteArray, error) {
-	panic("")
-}
-
-func to32ByteCommR(sealedCID cid.Cid) (generated.Fil32ByteArray, error) {
-	panic("")
-}
-
-func to32ByteCommP(pieceCID cid.Cid) (generated.Fil32ByteArray, error) {
-	panic("")
-}
-
-func copyBytes(v []byte, vLen uint) []byte {
-	panic("")
-}
-
 type stringHeader struct {
 	Data unsafe.Pointer
 	Len  int
-}
-
-func toVanillaProofs(src [][]byte) ([]generated.FilVanillaProof, func()) {
-	panic("")
 }

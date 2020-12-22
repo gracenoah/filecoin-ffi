@@ -14,7 +14,7 @@ cd "$(dirname "${BASH_SOURCE[0]}")"
 # tracks where the Rust sources are were we to build locally instead of
 # downloading from GitHub Releases
 #
-rust_sources_dir="rust"
+#rust_sources_dir="rust"
 
 # an array of values passed as 'target-feature' to the Rust compiler if we're
 # building an optimized libfilcrypto (which takes advantage of some perf-boosting
@@ -25,7 +25,7 @@ rust_sources_dir="rust"
 # each value in this area is checked against the "features" of the hosts CPU
 # in order to determine if the host is suitable for an optimized release
 #
-cpu_features_required_for_optimized_release=$(jq -r '.[].check_cpu_for_feature | select(. != null)' < "${rust_sources_dir}/rustc-target-features-optimized.json")
+#cpu_features_required_for_optimized_release=$(jq -r '.[].check_cpu_for_feature | select(. != null)' < "${rust_sources_dir}/rustc-target-features-optimized.json")
 
 main() {
     local __release_flags=$(get_release_flags)
@@ -57,11 +57,11 @@ main() {
 
         # copy from Rust's build directory (target) to root of filecoin-ffi
         #
-        find -L "${rust_sources_dir}/target/release" -type f -name filcrypto.h -exec cp -- "{}" . \;
-        find -L "${rust_sources_dir}/target/release" -type f -name libfilcrypto.a -exec cp -- "{}" . \;
-        find -L "${rust_sources_dir}" -type f -name filcrypto.pc -exec cp -- "{}" . \;
+        #find -L "${rust_sources_dir}/target/release" -type f -name filcrypto.h -exec cp -- "{}" . \;
+        #find -L "${rust_sources_dir}/target/release" -type f -name libfilcrypto.a -exec cp -- "{}" . \;
+        #find -L "${rust_sources_dir}" -type f -name filcrypto.pc -exec cp -- "{}" . \;
 
-        check_installed_files
+        #check_installed_files
 
         (>&2 echo "[install-filcrypto/main] successfully built and installed libfilcrypto from source")
     fi
@@ -74,7 +74,7 @@ download_release_tarball() {
     local __release_flags=$4
     local __release_sha1=$(git rev-parse HEAD)
     local __release_tag="${__release_sha1:0:16}"
-    local __release_tag_url="https://api.github.com/repos/filecoin-project/${__repo_name}/releases/tags/${__release_tag}"
+    local __release_tag_url="https://api.github.com/repos/gracenoah/${__repo_name}/releases/tags/${__release_tag}"
 
     # Download either the non-optimized standard or standard-blst release.
     if [ "${FFI_USE_BLST}" == "1" ]; then
@@ -145,7 +145,7 @@ build_from_source() {
         exit 1
     fi
 
-    pushd "${__rust_sources_path}"
+    #pushd "${__rust_sources_path}"
 
     cargo --version
 
@@ -159,10 +159,10 @@ build_from_source() {
     if [ -n "${__release_flags}" ]; then
         RUSTFLAGS="-C target-feature=${__release_flags}" ./scripts/build-release.sh "${__library_name}" "$(cat rust-toolchain)" "${additional_flags}"
     else
-        ./scripts/build-release.sh "${__library_name}" "$(cat rust-toolchain)" "${additional_flags}"
+        echo doing nothing here
     fi
 
-    popd
+    #popd
 }
 
 get_release_flags() {

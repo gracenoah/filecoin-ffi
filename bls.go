@@ -1,10 +1,5 @@
 package ffi
 
-// #cgo LDFLAGS: ${SRCDIR}/libfilcrypto.a
-// #cgo pkg-config: ${SRCDIR}/filcrypto.pc
-// #include "./filcrypto.h"
-import "C"
-
 // Hash computes the digest of a message
 func Hash(message Message) Digest {
 	panic("")
